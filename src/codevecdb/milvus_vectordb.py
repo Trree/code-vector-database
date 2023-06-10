@@ -24,7 +24,7 @@ _ID_FIELD_NAME = 'id_field'
 _VECTOR_FIELD_NAME = 'embedding'
 
 # Vector parameters
-_DIM = 2048
+_DIM = 1536
 _INDEX_FILE_SIZE = 32  # max file size of stored index
 
 # Index parameters
