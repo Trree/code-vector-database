@@ -102,6 +102,19 @@ def insert(collection, i, semantics, code,  vector):
     print("end insert")
     return data
 
+def batch_insert(collection, i, code_result):
+    #for i, (code, result) in enumerate(code_result.items()):
+    data = [
+        [i + j for j in range(len(code_result))],
+        [code_result[key]["semantics"] for key in code_result.keys()],
+        [key for key in code_result.keys()],
+        [code_result[key]["codeVector"] for key in code_result.keys()]
+    ]
+    print(data)
+    collection.insert(data)
+    print("end insert")
+    return data
+
 def get_entity_num(collection):
     print("\nThe number of entity:")
     print(collection.num_entities)
