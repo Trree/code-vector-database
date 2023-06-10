@@ -1,8 +1,11 @@
 
 from langchain.llms import OpenAI
 from langchain import PromptTemplate
-
-
+import os
+import openai
+if os.getenv("OPENAI_PROXY"):
+    OPENAI_PROXY = os.getenv("OPENAI_PROXY")
+    openai.proxy = OPENAI_PROXY
 def getFunctionSemantis(code):
     llm = OpenAI(temperature=0.3)
     template = """
