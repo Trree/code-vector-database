@@ -15,6 +15,7 @@ def post_code():
         return render_template('code.html', results=results)
     return render_template('code.html')
 
+
 @app.route('/query', methods=['GET', 'POST'])
 def query_code():
     if request.method == 'POST':
@@ -23,16 +24,17 @@ def query_code():
         return render_template('query.html', results=results)
     return render_template('query.html')
 
+
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         file = request.files['file']
-        #file.save(os.path.join('uploads', file.filename))
         with open(os.path.join('uploads', file.filename), 'r') as f:
             content = f.read()
             print(content)
         return render_template('upload_file.html', content=content)
     return render_template('upload_file.html')
+
 
 @app.route('/')
 def hello_world():  # put application's code here

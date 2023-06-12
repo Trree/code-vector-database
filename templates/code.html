@@ -75,7 +75,9 @@
         <div class="result">
             {% if results %}
                 <h2>代码语义</h2>
-                <pre>{{ results }}</pre>
+                {% for item in results %}
+                    <pre>{{ item }}</pre>
+                {% endfor %}
             {% endif %}
         </div>
     </div>
