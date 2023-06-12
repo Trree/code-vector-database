@@ -16,6 +16,7 @@ class Config(metaclass=Singleton):
         self.milvus_uri = os.getenv("milvus_uri")
         self.milvus_user = os.getenv("milvus_user")
         self.milvus_password = os.getenv("milvus_password")
+        self.milvus_collection_ttl = os.getenv("milvus_collection_ttl")
 
     def set_openai_api_key(self, value: str) -> None:
         """Set the OpenAI API key value."""
@@ -32,6 +33,9 @@ class Config(metaclass=Singleton):
     def set_milvus_password(self, value: str) -> None:
         """Set the milvus_password value."""
         self.milvus_password = value
+
+    def set_milvus_collection_ttl(self, value: str) -> None:
+        self.milvus_collection_ttl = value
 
 def check_openai_api_key() -> None:
     """Check if the OpenAI API key is set in config.py or as an environment variable."""

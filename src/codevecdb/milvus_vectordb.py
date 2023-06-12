@@ -30,13 +30,8 @@ _INDEX_FILE_SIZE = 32  # max file size of stored index
 # Index parameters
 _METRIC_TYPE = 'L2'
 _INDEX_TYPE = 'IVF_FLAT'
-_NLIST = 1024
-_NPROBE = 16
-_TOPK = 3
 
 
-
-# Create a Milvus connection
 def create_connection():
     print(f"\nCreate connection...")
     cfp = Config()
@@ -62,7 +57,7 @@ def create_collection(name):
         FieldSchema(name="id", dtype=DataType.INT64, is_primary=True, auto_id=False),
         FieldSchema(name="semantics", dtype=DataType.VARCHAR, max_length=1000),
         FieldSchema(name="code", dtype=DataType.VARCHAR, max_length=5000),
-        FieldSchema(name='embedding', dtype=DataType.FLOAT_VECTOR, description='Embedding vectors',  dim=_DIM)
+        FieldSchema(name='embedding', dtype=DataType.FLOAT_VECTOR, description='Embedding vectors', dim=_DIM)
     ]
 
     schema = CollectionSchema(fields=default_fields, description="collection description")
@@ -70,6 +65,10 @@ def create_collection(name):
 
     print("\ncollection created:", name)
     return collection
+
+
+def get_collection(name):
+    return Collection(name=name)
 
 
 def has_collection(name):
@@ -89,9 +88,8 @@ def list_collections():
     print(utility.list_collections())
 
 
-
-def insert(collection, i, semantics, code,  vector):
-    id =[i]
+def insert(collection, i, semantics, code, vector):
+    id = [i]
     s = [semantics]
     c = [code]
     v = [vector]
@@ -102,8 +100,9 @@ def insert(collection, i, semantics, code,  vector):
     print("end insert")
     return data
 
+
 def batch_insert(collection, i, code_result):
-    #for i, (code, result) in enumerate(code_result.items()):
+    # for i, (code, result) in enumerate(code_result.items()):
     data = [
         [i + j for j in range(len(code_result))],
         [code_result[key]["semantics"] for key in code_result.keys()],
@@ -114,6 +113,7 @@ def batch_insert(collection, i, code_result):
     collection.insert(data)
     print("end insert")
     return data
+
 
 def get_entity_num(collection):
     print("\nThe number of entity:")
@@ -154,7 +154,8 @@ def search(collection, search_vectors, top_k=5):
         }
     }
 
-    results = collection.search([search_vectors], _VECTOR_FIELD_NAME, search_param, output_fields=['semantics', 'code'], limit=top_k)
+    results = collection.search([search_vectors], _VECTOR_FIELD_NAME, search_param, output_fields=['semantics', 'code'],
+                                limit=top_k)
     queryCode = []
     for i, result in enumerate(results):
         print("\nSearch result for {}th vector: ".format(i))
@@ -164,5 +165,9 @@ def search(collection, search_vectors, top_k=5):
             queryCode.append(res)
     return queryCode
 
+
 def set_properties(collection):
-    collection.set_properties(properties={"collection.ttl.seconds": 1800})
+    cfp = Config()
+    ttl_second = int(cfp.milvus_collection_ttl)
+    if ttl_second > 0:
+        collection.set_properties(properties={"collection.ttl.seconds": 1800})

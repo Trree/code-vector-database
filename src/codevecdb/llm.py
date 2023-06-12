@@ -6,7 +6,9 @@ import openai
 if os.getenv("OPENAI_PROXY"):
     OPENAI_PROXY = os.getenv("OPENAI_PROXY")
     openai.proxy = OPENAI_PROXY
-def getFunctionSemantis(code):
+
+
+def getFunctionSemantics(code):
     llm = OpenAI(temperature=0.3)
     template = """
     你是一个计算机专家，能很好的理解程序代码函数的语义，你可以通过代码和代码上的注释很好的理解代码的作用和功能。

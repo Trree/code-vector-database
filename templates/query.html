@@ -76,7 +76,9 @@
             {% if results %}
                 <h2 > 查询结果 </h2>
                 <ul>
-                    <li>{{ results }}</li>
+                    {% for item in results %}
+                        <pre>{{ item }}</pre>
+                    {% endfor %}
                 </ul>
             {% endif %}
         </div>

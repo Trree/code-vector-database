@@ -7,9 +7,12 @@ _COLLECTION_NAME = 'code'
 def searchCode(query, top_k = 5):
     # create a connection
     milvus_vectordb.create_connection()
-
     codeVector = langchianEmbedding.getTextEmbedding(query)
-    collection = milvus_vectordb.create_collection(_COLLECTION_NAME)
+
+    if milvus_vectordb.has_collection(_COLLECTION_NAME):
+        collection = milvus_vectordb.get_collection(name=_COLLECTION_NAME)
+    else:
+        collection = milvus_vectordb.create_collection(_COLLECTION_NAME)
     # load data to memory
     milvus_vectordb.load_collection(collection)
     milvus_vectordb.set_properties(collection)
