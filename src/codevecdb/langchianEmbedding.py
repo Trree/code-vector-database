@@ -16,7 +16,11 @@ def get_semantics_vector(semantics_list):
             print(semantics_list)
             futures = [executor.submit(semantics_vector, item) for item in semantics_list]
             print(futures)
-            codeVector = [future.result() for future in futures]
+            codeVector = []
+            for f in futures:
+                codeVector.append(f.result())
+            #codeVector = [future.result() for future in futures]
+
     return codeVector
 
 

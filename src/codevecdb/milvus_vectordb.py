@@ -95,7 +95,7 @@ def batch_insert(collection, i, code_result):
     data = [
         [i + j for j in range(len(code_result))],
         [code_result[key]["semantics"] for key in code_result.keys()],
-        [key for key in code_result.keys()],
+        [str(key) for key in code_result.keys()],
         [code_result[key]["codeVector"] for key in code_result.keys()]
     ]
     print(data)
