@@ -1,10 +1,10 @@
 
-from src.codevecdb import langchianEmbedding, milvus_vectordb, llm
-import time
 from concurrent.futures import ThreadPoolExecutor
-from src.codevecdb.extract import extract_functions
 
-_COLLECTION_NAME = 'code'
+from src.codevecdb import llm
+from src.codevecdb.extract import extract_functions
+from src.codevecdb.langchianEmbedding import get_semantics_vector
+from src.codevecdb.milvus_vectordb import batchInsert
 
 
 def parsePythonFileCode(python_code):
@@ -20,23 +20,10 @@ def parseCodeAndInsert(code):
     semantics = batchParseCodeAndInsert(code_list)
     return semantics
 
-def batchParseCodeAndInsert(code_list):
-    milvus_vectordb.create_connection()
-    if milvus_vectordb.has_collection(_COLLECTION_NAME):
-        collection = milvus_vectordb.get_collection(name=_COLLECTION_NAME)
-    else:
-        collection = milvus_vectordb.create_collection(_COLLECTION_NAME)
 
-    milvus_vectordb.set_properties(collection)
-    milvus_vectordb.list_collections()
+def batchParseCodeAndInsert(code_list):
     result_dict, semantics = getSemanticsAndVector(code_list, False)
-    milvus_vectordb.batch_insert(collection, int(time.time()*1000), result_dict)
-    print("after insert")
-    collection.flush()
-    milvus_vectordb.get_entity_num(collection)
-    milvus_vectordb.create_index(collection, "embedding")
-    milvus_vectordb.load_collection(collection)
-    milvus_vectordb.release_collection(collection)
+    batchInsert(result_dict)
     return semantics
 
 
@@ -45,9 +32,7 @@ def getSemanticsAndVector(code_list, asyncRequest):
         with ThreadPoolExecutor() as executor:
             futures = [executor.submit(llm.getFunctionSemantics, item) for item in code_list]
             semantics = [future.result() for future in futures]
-        with ThreadPoolExecutor() as executor:
-            futures = [executor.submit(langchianEmbedding.getTextEmbedding, item) for item in semantics]
-            codeVector = [future.result() for future in futures]
+        codeVector = get_semantics_vector(semantics)
         result_dict = {}
         for code, semantics_item, codeVector_item in zip(code_list, semantics, codeVector):
             result_dict[code] = {"semantics": semantics_item, "codeVector": codeVector_item}
@@ -57,10 +42,7 @@ def getSemanticsAndVector(code_list, asyncRequest):
         for item in code_list:
             semantics.append(llm.getFunctionSemantics(item))
 
-        codeVector = []
-        for item in semantics:
-            codeVector.append(langchianEmbedding.getTextEmbedding(item))
-
+        codeVector = get_semantics_vector(semantics)
         result_dict = {}
         for code, semantics_item, codeVector_item in zip(code_list, semantics, codeVector):
             result_dict[code] = {"semantics": semantics_item, "codeVector": codeVector_item}

@@ -7,11 +7,12 @@ import os
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
+
 @app.route('/code', methods=['GET', 'POST'])
 def post_code():
     if request.method == 'POST':
-        codestr = request.form['code']
-        results = parseCodeAndInsert(codestr)
+        code_str = request.form['code']
+        results = parseCodeAndInsert(code_str)
         return render_template('code.html', results=results)
     return render_template('code.html')
 

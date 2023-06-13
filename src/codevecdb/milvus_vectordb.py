@@ -1,5 +1,5 @@
 import configparser
-import json
+import time
 
 from pymilvus import (
     connections,
@@ -17,16 +17,7 @@ from src.codevecdb.config.Config import Config
 #   4. create index
 #   5. search
 
-
-# Const names
-
-_ID_FIELD_NAME = 'id_field'
 _VECTOR_FIELD_NAME = 'embedding'
-
-# Vector parameters
-_DIM = 1536
-_INDEX_FILE_SIZE = 32  # max file size of stored index
-
 # Index parameters
 _METRIC_TYPE = 'L2'
 _INDEX_TYPE = 'IVF_FLAT'
@@ -53,11 +44,17 @@ def create_connection():
 
 # Create a collection named 'demo'
 def create_collection(name):
+    cfg = Config()
+    if cfg.vector_embeddings == "openai":
+        dim = 1536
+    else:
+        dim = 384
+
     default_fields = [
         FieldSchema(name="id", dtype=DataType.INT64, is_primary=True, auto_id=False),
         FieldSchema(name="semantics", dtype=DataType.VARCHAR, max_length=1000),
         FieldSchema(name="code", dtype=DataType.VARCHAR, max_length=5000),
-        FieldSchema(name='embedding', dtype=DataType.FLOAT_VECTOR, description='Embedding vectors', dim=_DIM)
+        FieldSchema(name=_VECTOR_FIELD_NAME, dtype=DataType.FLOAT_VECTOR, description='Embedding vectors', dim=dim)
     ]
 
     schema = CollectionSchema(fields=default_fields, description="collection description")
@@ -135,7 +132,7 @@ def create_index(collection, filed_name):
 
 def drop_index(collection):
     collection.drop_index()
-    print("\nDrop index sucessfully")
+    print("drop index success")
 
 
 def load_collection(collection):
@@ -170,4 +167,48 @@ def set_properties(collection):
     cfp = Config()
     ttl_second = int(cfp.milvus_collection_ttl)
     if ttl_second > 0:
-        collection.set_properties(properties={"collection.ttl.seconds": 1800})
+        collection.set_properties(properties={"collection.ttl.seconds": ttl_second})
+
+
+def batchInsert(result_dict):
+    cfg = Config()
+    collection_name = cfg.milvus_collection_name
+    create_connection()
+    if has_collection(collection_name):
+        collection = get_collection(name=collection_name)
+    else:
+        collection = create_collection(collection_name)
+
+    set_properties(collection)
+    list_collections()
+    batch_insert(collection, int(time.time() * 1000), result_dict)
+
+    collection.flush()
+    get_entity_num(collection)
+    create_index(collection, "embedding")
+    load_collection(collection)
+    release_collection(collection)
+
+
+def searchVectorCode(code_vector_list, top_k):
+    cfg = Config()
+    collection_name = cfg.milvus_collection_name
+    if code_vector_list:
+        codeVector = code_vector_list[0]
+    else:
+        return ["not found"]
+
+    create_connection()
+    if has_collection(collection_name):
+        collection = get_collection(name=collection_name)
+    else:
+        collection = create_collection(collection_name)
+    # load data to memory
+    load_collection(collection)
+    set_properties(collection)
+    list_collections()
+
+    # search
+    result = search(collection, codeVector, top_k)
+    release_collection(collection)
+    return result
