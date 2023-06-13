@@ -1,10 +1,23 @@
-from langchain.embeddings import OpenAIEmbeddings
+from concurrent.futures import ThreadPoolExecutor
+
+from src.codevecdb.bert_vector import semantics_vector
+from src.codevecdb.config.Config import Config
+from src.codevecdb.openai_embeddings import getTextEmbedding
 
 
-def getTextEmbedding(text):
-    embeddings = OpenAIEmbeddings()
-    query_result = embeddings.embed_query(text)
-    return query_result
+def get_semantics_vector(semantics_list):
+    cfg = Config()
+    if cfg.vector_embeddings == "openai":
+        with ThreadPoolExecutor() as executor:
+            futures = [executor.submit(getTextEmbedding, item) for item in semantics_list]
+            codeVector = [future.result() for future in futures]
+    else:
+        with ThreadPoolExecutor() as executor:
+            print(semantics_list)
+            futures = [executor.submit(semantics_vector, item) for item in semantics_list]
+            print(futures)
+            codeVector = [future.result() for future in futures]
+    return codeVector
 
 
 if __name__ == '__main__':
