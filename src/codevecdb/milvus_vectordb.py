@@ -211,7 +211,10 @@ def searchRecentData(top_k=100):
     if not has_collection(collection_name):
         return ["not found"]
 
-    collection = get_collection(name=collection_name)
-    results = collection.query(expr="id > 0", limit=top_k, output_fields=["semantics", "code"])
+    try:
+        collection = get_collection(name=collection_name)
+        results = collection.query(expr="id > 0", limit=top_k, output_fields=["semantics", "code"])
+    except Exception as e:
+        return [e]
     print("this is result" + str(results))
     return results
