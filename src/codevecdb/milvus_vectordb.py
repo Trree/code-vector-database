@@ -10,18 +10,10 @@ from pymilvus import (
 
 from src.codevecdb.config.Config import Config
 
-# This example shows how to:
-#   1. connect to Milvus server
-#   2. create a collection
-#   3. insert entities
-#   4. create index
-#   5. search
-
 _VECTOR_FIELD_NAME = 'embedding'
 # Index parameters
 _METRIC_TYPE = 'L2'
 _INDEX_TYPE = 'IVF_FLAT'
-
 
 def create_connection():
     print(f"\nCreate connection...")
@@ -157,8 +149,6 @@ def search(collection, search_vectors, top_k=5):
     for i, result in enumerate(results):
         print("\nSearch result for {}th vector: ".format(i))
         for j, res in enumerate(result):
-            print("Top {}: {}".format(j, res))
-            print(type(res))
             queryCode.append(res)
     return queryCode
 
@@ -212,3 +202,16 @@ def searchVectorCode(code_vector_list, top_k):
     result = search(collection, codeVector, top_k)
     release_collection(collection)
     return result
+
+
+def searchRecentData(top_k=100):
+    cfg = Config()
+    collection_name = cfg.milvus_collection_name
+    create_connection()
+    if not has_collection(collection_name):
+        return ["not found"]
+
+    collection = get_collection(name=collection_name)
+    results = collection.query(expr="id > 0", limit=top_k, output_fields=["semantics", "code"])
+    print("this is result" + str(results))
+    return results
