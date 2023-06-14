@@ -1,88 +1,149 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>代码向量数据库</title>
+    <title>title</title>
+    <link href="http://lxcode.bs2cdn.yy.com/ae1fc5b1-0240-4d98-82cf-be7f7269565c.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #333333;
-        }
-
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
+        .code-box .code-box-demo {
             background-color: #ffffff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 6px 6px 0 0;
+            padding: 42px 24px 50px;
+            color: rgba(0, 0, 0, 0.88);
+            border-bottom: 1px solid rgba(5, 5, 5, 0.06);
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .form-group textarea {
+        .code-box {
+            position: relative;
+            display: inline-block;
             width: 100%;
-            height: 200px;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #cccccc;
+            margin: 0 0 16px;
+            background-color: #ffffff;
+            border: 1px solid rgba(5, 5, 5, 0.06);
+            border-radius: 6px;
+            -webkit-transition: all 0.2s;
+            transition: all 0.2s;
+        }
+        .container {
+            max-width: 800px; /* Set a maximum width for the container */
+            margin: 0 auto; /* Center the container horizontally */
+        }
+        .ant-menu-item-selected {
+        background-color: purple;
         }
 
-        .form-group input[type="submit"] {
-            padding: 10px 20px;
-            background-color: #4caf50;
-            border: none;
-            color: #ffffff;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .result {
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #eafaea;
+        .ant-menu-item-selected a {
+            color: white;
         }
     </style>
 </head>
-<body>
-    <h1>代码向量数据库</h1>
-    <div class="container">
-        <form method="POST" action="/query">
-            <div class="form-group">
-                <label for="query">代码查询:</label>
-                <textarea id="query" name="query" rows="15" cols="35" required="" style="width: 415px; height: 51px;"></textarea>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Submit">
-            </div>
-        </form>
-        <div class="result">
-            {% if results %}
-                <h2 > 查询结果 </h2>
-                <ul>
-                    {% for item in results %}
-                        <pre>{{ item }}</pre>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        </div>
-    </div>
-</body>
-</html>
 
+
+<body>
+	<div id="root">
+   <div class="css-12jzuas ant-app">
+      <section class="ant-layout ant-layout-has-sider css-12jzuas">
+         <aside class="ant-layout-sider ant-layout-sider-dark" style="flex: 0 0 200px; max-width: 200px; min-width: 200px; width: 200px;">
+            <div class="ant-layout-sider-children">
+               <div class="demo-logo-vertical"></div>
+               <ul class="ant-menu ant-menu-root ant-menu-inline ant-menu-dark css-12jzuas" role="menu" tabindex="0" data-menu-list="true">
+                  <li class="ant-menu-item" role="menuitem" tabindex="-1" style="padding-left: 24px;" data-menu-id="rc-menu-uuid-59451-1-1">
+                     <span role="img" aria-label="user" class="anticon anticon-user ant-menu-item-icon">
+                        <svg viewBox="64 64 896 896" focusable="false" data-icon="user" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+                           <path d="M858.5 763.6a374 374 0 00-80.6-119.5 375.63 375.63 0 00-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 00-80.6 119.5A371.7 371.7 0 00136 901.8a8 8 0 008 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 008-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z"></path>
+                        </svg>
+                     </span>
+                     <span class="ant-menu-title-content">
+                         <a href="/">首页</a>
+                     </span>
+                  </li>
+                  <li class="ant-menu-item" role="menuitem" tabindex="-1" style="padding-left: 24px;" data-menu-id="rc-menu-uuid-59451-1-2">
+                     <span role="img" aria-label="video-camera" class="anticon anticon-video-camera ant-menu-item-icon">
+                        <svg viewBox="64 64 896 896" focusable="false" data-icon="video-camera" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+                           <path d="M912 302.3L784 376V224c0-35.3-28.7-64-64-64H128c-35.3 0-64 28.7-64 64v576c0 35.3 28.7 64 64 64h592c35.3 0 64-28.7 64-64V648l128 73.7c21.3 12.3 48-3.1 48-27.6V330c0-24.6-26.7-40-48-27.7zM712 792H136V232h576v560zm176-167l-104-59.8V458.9L888 399v226zM208 360h112c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H208c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8z"></path>
+                        </svg>
+                     </span>
+                     <span class="ant-menu-title-content">
+                         <a href="/code">插入数据</a>
+                     </span>
+                  </li>
+                  <li class="ant-menu-item ant-menu-item-selected" role="menuitem" tabindex="-1" style="padding-left: 24px;" data-menu-id="rc-menu-uuid-59451-1-3">
+                     <span role="img" aria-label="upload" class="anticon anticon-upload ant-menu-item-icon">
+                        <svg viewBox="64 64 896 896" focusable="false" data-icon="upload" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+                           <path d="M400 317.7h73.9V656c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V317.7H624c6.7 0 10.4-7.7 6.3-12.9L518.3 163a8 8 0 00-12.6 0l-112 141.7c-4.1 5.3-.4 13 6.3 13zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path>
+                        </svg>
+                     </span>
+                     <span class="ant-menu-title-content">
+                         <a href="/query">查询数据</a>
+                     </span>
+                  </li>
+                   <li class="ant-menu-item" role="menuitem" tabindex="-1" style="padding-left: 24px;" data-menu-id="rc-menu-uuid-59451-1-3">
+                     <span role="img" aria-label="upload" class="anticon anticon-upload ant-menu-item-icon">
+                        <svg viewBox="64 64 896 896" focusable="false" data-icon="upload" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+                           <path d="M400 317.7h73.9V656c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V317.7H624c6.7 0 10.4-7.7 6.3-12.9L518.3 163a8 8 0 00-12.6 0l-112 141.7c-4.1 5.3-.4 13 6.3 13zM878 626h-60c-4.4 0-8 3.6-8 8v154H214V634c0-4.4-3.6-8-8-8h-60c-4.4 0-8 3.6-8 8v198c0 17.7 14.3 32 32 32h684c17.7 0 32-14.3 32-32V634c0-4.4-3.6-8-8-8z"></path>
+                        </svg>
+                     </span>
+                     <span class="ant-menu-title-content">
+                         <a href="/upload">上传文件</a>
+                     </span>
+                  </li>
+               </ul>
+               <div aria-hidden="true" style="display: none;"></div>
+            </div>
+         </aside>
+         <section class="ant-layout css-12jzuas">
+            <header class="ant-layout-header css-12jzuas" style="padding: 0px; background: rgb(255, 255, 255);">
+
+            </header>
+            <main class="ant-layout-content css-12jzuas" style="margin: 24px 16px; padding: 24px; min-height: 280px; background: rgb(255, 255, 255);">
+			<div class="container">
+
+                <form method="POST" action="/query">
+                <section class="code-box">
+                    <section class="code-box-demo">
+                        <h1 class="ant-typography">代码向量数据库</h1>
+                        <h4 class="ant-typography">查询:</h4>
+                        <textarea placeholder="代码查询" class="ant-input"
+                            style="overflow-y: hidden; resize: none; height: 182px;" id="code" name="code"></textarea>
+                        <input type="submit" value="Submit" class="ant-btn ant-btn-primary">
+                    </section>
+                </section>
+            </form>
+            <section class="code-box">
+                <div class="ant-result ant-result-success">
+                    {% if results %}
+                    <div class="ant-result-title">代码语义</div>
+                    {% for item in results %}
+                    <div class="ant-result-subtitle">{{ item }}</div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </section>
+
+{#        <form method="POST" action="/query">#}
+{#            <div class="form-group">#}
+{#                <label for="query">代码查询:</label>#}
+{#                <textarea id="query" name="query" rows="15" cols="35" required="" style="width: 415px; height: 51px;"></textarea>#}
+{#            </div>#}
+{#            <div class="form-group">#}
+{#                <input type="submit" value="Submit">#}
+{#            </div>#}
+{#        </form>#}
+{#        <div class="result">#}
+{#            {% if results %}#}
+{#                <h2 > 查询结果 </h2>#}
+{#                <ul>#}
+{#                    {% for item in results %}#}
+{#                        <pre>{{ item }}</pre>#}
+{#                    {% endfor %}#}
+{#                </ul>#}
+{#            {% endif %}#}
+{#        </div>#}
+{#    </div>#}
+			</main>
+         </section>
+      </section>
+   </div>
+</div>
+</body>
+
+</html>
