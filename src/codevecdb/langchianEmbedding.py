@@ -19,13 +19,5 @@ def get_semantics_vector(semantics_list):
             codeVector = []
             for f in futures:
                 codeVector.append(f.result())
-            #codeVector = [future.result() for future in futures]
 
     return codeVector
-
-
-if __name__ == '__main__':
-    print('Running as main')
-    getTextEmbedding("hello")
-else:
-    print('Imported as module')
