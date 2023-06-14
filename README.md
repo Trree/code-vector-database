@@ -1,27 +1,44 @@
-# 代码向量数据库
+# Local Code Vector Database based on ChatGPT
+
+## Introduction
+
+🤖️ This project utilizes the fully open-source [milvus](https://github.com/milvus-io/milvus) to build a local code vector database, 
+enabling local, personal, and company-level code vectorization. 
+It supports the creation of function and feature-level code vector databases by parsing code files at the function level. 
+It leverages ChatGPT to obtain the semantic meaning of functions and utilizes [Sentence-BERT](https://mccormickml.com/2019/05/14/BERT-word-embeddings-tutorial/) for word embeddings.
 
 
-### 使用场景
-- 建立个人或者公司级别的向量代码库 
-- 支持通过 prompt 匹配得到自己的代码 
-- 支持通过需求文档生成框架和代码
+## Use Cases
+- Building personal or company-level code vector libraries
+- Uploading code files to establish function and feature-level code vector databases
+- Searching for your own code using prompts
+- Generating frameworks and code based on requirement documents
 
-### 需求
-- [ ] 支持上传代码文件
-- [ ] 函数级别切分代码
-- [x] 通过 ChatGPT 获得切分函数的语意
-- [x] 通过语意建立代码向量库
-- [x] 支持各种开源向量数据库
-- [x] 支持页面搜索
-- [ ] 支持通过 ChatGPT 优化代码
-- [ ] 支持 ChatGPT 翻译自定义代码为其他语言
-- [ ] 支持监督调整
+### List
+- [x] Support uploading Python, Java, and C++ code files
+- [x] Parse code at the function level
+- [x] Obtain semantic meaning of parsed functions using ChatGPT
+- [x] Build code vector libraries based on semantic meaning
+- [x] Support various open-source vector databases
+- [x] Support searching on a web interface
+- [ ] Support code optimization using ChatGPT
+- [ ] Support translation of custom code to other languages using ChatGPT
+- [ ] Support supervised adjustments
 
-### 依赖
+### Dependencies
+
+- python 
+  - python = 3.10
+
+- antlr4-python3-runtime
+  - Used for generating grammar parsers and lexical analyzers to extract function code content
 
 - milvus 
-  - 免费试用: https://cloud.zilliz.com/login?redirect=/projects/MA==/databases
-  - 连接更新config.ini文件中的配置
+  - [Free trial](https://cloud.zilliz.com/login?redirect=/projects/MA==/databases)
+  - update .env milvus config
 - openai
   - cp .env.template .env 
-  - 更新.env中的openai_api_key
+  - update .env openai_api_key
+
+- Sentence-BERT
+  - word embeddings.
