@@ -42,3 +42,15 @@ It leverages ChatGPT to obtain the semantic meaning of functions and utilizes [S
 
 - Sentence-BERT
   - word embeddings.
+
+
+## Local Deployment
+
+- To deploy the Milvus database, you can use the free version directly or deploy it locally.
+
+- Copy the `.env.template` file to `.env` and update the OpenAI API key and the link to Milvus.
+
+- Start `python app.py`.
+
+- Connect to `127.0.0.1:5000` on your browser.
+
