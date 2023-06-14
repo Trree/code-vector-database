@@ -1,9 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>title</title>
+    <title>文件上传</title>
     <link href="http://lxcode.bs2cdn.yy.com/ae1fc5b1-0240-4d98-82cf-be7f7269565c.css" rel="stylesheet">
     <style>
+        #drop-area {
+            border: 2px dashed #ccc;
+            width: 300px;
+            height: 200px;
+            padding: 25px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 0 auto;
+        }
+        #file-input {
+            display: none;
+        }
+        #upload-button {
+            margin-top: 10px;
+        }
         .code-box .code-box-demo {
             background-color: #ffffff;
             border-radius: 6px 6px 0 0;
@@ -34,13 +49,29 @@
         .ant-menu-item-selected a {
             color: white;
         }
+
+        #root {
+          display: flex;
+          min-height: 100vh;
+          flex-direction: column;
+        }
+
+        main {
+          flex-grow: 1;
+        }
+        footer {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+        }
+
+
     </style>
 </head>
-
-
 <body>
-	<div id="root">
-   <div class="css-12jzuas ant-app">
+<div id="root" >
+   <main class="css-12jzuas ant-app">
       <section class="ant-layout ant-layout-has-sider css-12jzuas">
          <aside class="ant-layout-sider ant-layout-sider-dark" style="flex: 0 0 200px; max-width: 200px; min-width: 200px; width: 200px;">
             <div class="ant-layout-sider-children">
@@ -90,22 +121,100 @@
                <div aria-hidden="true" style="display: none;"></div>
             </div>
          </aside>
-         <section class="ant-layout css-12jzuas">
-            <header class="ant-layout-header css-12jzuas" style="padding: 0px; background: rgb(255, 255, 255);">
+          <header class="ant-layout-header css-12jzuas" style="padding: 0px; background: rgb(255, 255, 255);">
 
-            </header>
-            <main class="ant-layout-content css-12jzuas" style="margin: 24px 16px; padding: 24px; min-height: 280px; background: rgb(255, 255, 255);">
-			<div class="container">
-                <form method="POST" enctype="multipart/form-data" action="/upload">
-                  <input type="file" name="file">
-                  <input type="submit" value="Upload">
-                </form>
+          </header>
+        <main class="ant-layout-content css-12jzuas" style="margin: 24px 16px; padding: 24px; min-height: 280px; background: rgb(255, 255, 255);">
+        <div class="container">
+            <div id="drop-area">
+                <h1>拖放文件到此区域</h1>
+                <p>或者点击此区域选择文件</p>
+                <input type="file" id="file-input" multiple>
+                <button id="upload-button">上传</button>
             </div>
-			</main>
-         </section>
+
+            <script>
+                var dropArea = document.getElementById('drop-area');
+                var fileInput = document.getElementById('file-input');
+                var uploadButton = document.getElementById('upload-button');
+
+                // 阻止浏览器默认行为以允许拖放
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    dropArea.addEventListener(eventName, preventDefaults, false);
+                    document.body.addEventListener(eventName, preventDefaults, false);
+                });
+
+                // 添加文件拖放的样式
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    dropArea.addEventListener(eventName, highlight, false);
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    dropArea.addEventListener(eventName, unhighlight, false);
+                });
+
+                // 处理拖放事件
+                dropArea.addEventListener('drop', handleDrop, false);
+
+                // 点击按钮选择文件
+                uploadButton.addEventListener('click', function() {
+                    fileInput.click();
+                });
+
+                // 处理选定的文件
+                fileInput.addEventListener('change', function() {
+                    handleFiles(fileInput.files);
+                });
+
+                function preventDefaults(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+
+                function highlight() {
+                    dropArea.style.background = 'lightgray';
+                }
+
+                function unhighlight() {
+                    dropArea.style.background = 'white';
+                }
+
+                function handleDrop(e) {
+                    var dt = e.dataTransfer;
+                    var files = dt.files;
+
+                    handleFiles(files);
+                }
+
+                function handleFiles(files) {
+                    files = [...files];
+                    files.forEach(uploadFile);
+                }
+
+                function uploadFile(file) {
+                    var url = '/upload'; // Flask服务器的上传URL
+
+                    var formData = new FormData();
+                    formData.append('file', file);
+
+                    fetch(url, {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        console.log('文件上传成功！');
+                        // 在此处执行成功后的操作
+                    })
+                    .catch(error => {
+                        console.error('文件上传失败:', error);
+                        // 在此处处理错误
+                    });
+                }
+            </script>
+        </div>
+        </main>
       </section>
-   </div>
+   </main>
 </div>
 </body>
-
 </html>
