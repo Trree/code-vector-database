@@ -209,12 +209,13 @@ def searchRecentData(top_k=100):
     collection_name = cfg.milvus_collection_name
     create_connection()
     if not has_collection(collection_name):
-        return ["not found"]
+        return ["请插入数据创建数据集合"]
 
     try:
         collection = get_collection(name=collection_name)
         results = collection.query(expr="id > 0", limit=top_k, output_fields=["semantics", "code"])
     except Exception as e:
         return [e]
-    print("this is result" + str(results))
+    for item in results:
+        print(item)
     return results

@@ -34,6 +34,23 @@
         .ant-menu-item-selected a {
             color: white;
         }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+        .code {
+            white-space: pre-wrap;
+        }
     </style>
 </head>
 
@@ -96,22 +113,30 @@
             </header>
             <main class="ant-layout-content css-12jzuas" style="margin: 24px 16px; padding: 24px; min-height: 280px; background: rgb(255, 255, 255);">
 			<div class="container">
+                <h1>代码向量数据库</h1>
+                    <div class="container">
+                        <div class="code">
+                            {% if results %}
+                                <h2 > 数据库中最近数据 </h2>
+                                <table>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>代码</th>
+                                        <th>语义</th>
+                                    </tr>
+                                    {% for item in results %}
+                                    <tr>
+                                        <td>{{ item.id }}</td>
+                                        <td>{{ item.code }}</td>
+                                        <td>{{ item.semantics }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            {% endif %}
+                        </div>
+                    </div>
 
-        <h1>代码向量数据库</h1>
-    <div class="container">
-        <div class="result">
-            {% if results %}
-                <h2 > 查询结果 </h2>
-                <ul>
-                    {% for item in results %}
-                        <pre>{{ item }}</pre>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        </div>
-    </div>
-
-    </div>
+            </div>
 			</main>
          </section>
       </section>
