@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 
 from src.codevecdb.parse_code import parseCodeAndInsert
 from src.codevecdb.search_code import searchCode, getAllCode
-import os
+from src.codevecdb.split.split_dispatch import split_file_to_function
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -30,10 +30,8 @@ def query_code():
 def upload_file():
     if request.method == 'POST':
         file = request.files['file']
-        with open(os.path.join('uploads', file.filename), 'r') as f:
-            content = f.read()
-            print(content)
-        return render_template('upload_file.html', content=content)
+        split_file_to_function(file)
+        return render_template('upload_file.html')
     return render_template('upload_file.html')
 
 
