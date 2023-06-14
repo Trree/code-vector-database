@@ -34,7 +34,7 @@ It leverages ChatGPT to obtain the semantic meaning of functions and utilizes [S
   - Used for generating grammar parsers and lexical analyzers to extract function code content
 
 - milvus 
-  - [Free trial](https://cloud.zilliz.com/login?redirect=/projects/MA==/databases)
+  - [milvus Free trial](https://cloud.zilliz.com/login?redirect=/projects/MA==/databases)
   - update .env milvus config
 - openai
   - cp .env.template .env 
