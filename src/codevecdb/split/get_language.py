@@ -8,8 +8,8 @@ def get_language(file_path):
         return 'Python'
     elif file_extension == '.java':
         return 'Java'
-    elif file_extension == '.cpp' or file_extension == '.h':
-        return 'C++'
+    elif file_extension == '.cpp' or file_extension == ".cc" or file_extension == '.h':
+        return 'Cpp'
     # 添加其他语言的判断条件
     else:
         return 'Unknown'
