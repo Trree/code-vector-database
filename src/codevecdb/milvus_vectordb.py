@@ -176,7 +176,7 @@ def set_properties(collection):
 def batchInsert(result_dict):
     cfg = Config()
     collection_name = cfg.milvus_collection_name
-    create_connection()
+
     if has_collection(collection_name):
         collection = get_collection(name=collection_name)
     else:
@@ -201,7 +201,6 @@ def searchVectorCode(code_vector_list, top_k):
     else:
         return ["not found"]
 
-    create_connection()
     if has_collection(collection_name):
         collection = get_collection(name=collection_name)
     else:
