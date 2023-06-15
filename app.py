@@ -7,11 +7,7 @@ from src.codevecdb.milvus_vectordb import create_connection
     
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-
-
-@app.before_request
-def create_milvus_connection_pool():
-    create_connection()
+create_connection()
 
 
 @app.route('/code', methods=['GET', 'POST'])
@@ -48,6 +44,4 @@ def hello_world():
 
 
 if __name__ == '__main__':
-    print("start run")
-
     app.run()
