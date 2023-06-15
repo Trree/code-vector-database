@@ -176,7 +176,7 @@ def set_properties(collection):
 def batchInsert(result_dict):
     cfg = Config()
     collection_name = cfg.milvus_collection_name
-    create_connection()
+
     if has_collection(collection_name):
         collection = get_collection(name=collection_name)
     else:
@@ -201,7 +201,6 @@ def searchVectorCode(code_vector_list, top_k):
     else:
         return ["not found"]
 
-    create_connection()
     if has_collection(collection_name):
         collection = get_collection(name=collection_name)
     else:
@@ -220,12 +219,13 @@ def searchVectorCode(code_vector_list, top_k):
 def searchRecentData(top_k=100):
     cfg = Config()
     collection_name = cfg.milvus_collection_name
-    create_connection()
+
     if not has_collection(collection_name):
         return ["请插入数据创建数据集合"]
 
     try:
         collection = get_collection(name=collection_name)
+        load_collection(collection)
         results = collection.query(expr="id > 0", limit=top_k, output_fields=["semantics", "code"])
     except Exception as e:
         return [e]
