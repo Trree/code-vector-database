@@ -107,14 +107,12 @@
                     </section>
                 </section>
             </form>
-                <section class="ant-layout css-12jzuas">
-
+            <section class="ant-layout css-12jzuas">
             <main class="ant-layout-content css-12jzuas" style="margin: 24px 16px; padding: 24px; min-height: 280px; background: rgb(255, 255, 255);">
 			<div class="container">
-{#            <section class="code-box">#}
-{#                <div class="ant-result ant-result-success">#}
                     {% if results %}
                         <h2 > 查询最匹配代码 </h2>
+                        <pre>
                         <div class="code">
                             <table>
                                 <tr>
@@ -133,34 +131,12 @@
                                 {% endfor %}
                             </table>
                         </div>
-{#                    <div class="ant-result-title">代码语义</div>#}
-{#                    {% for item in results %}#}
-{#                    <div class="ant-result-subtitle">{{ item }}</div>#}
-{#                    {% endfor %}#}
+                        </pre>
                     {% endif %}
                 </div>
+            </main>
             </section>
-
-{#        <form method="POST" action="/query">#}
-{#            <div class="form-group">#}
-{#                <label for="query">代码查询:</label>#}
-{#                <textarea id="query" name="query" rows="15" cols="35" required="" style="width: 415px; height: 51px;"></textarea>#}
-{#            </div>#}
-{#            <div class="form-group">#}
-{#                <input type="submit" value="Submit">#}
-{#            </div>#}
-{#        </form>#}
-{#        <div class="result">#}
-{#            {% if results %}#}
-{#                <h2 > 查询结果 </h2>#}
-{#                <ul>#}
-{#                    {% for item in results %}#}
-{#                        <pre>{{ item }}</pre>#}
-{#                    {% endfor %}#}
-{#                </ul>#}
-{#            {% endif %}#}
-{#        </div>#}
-{#    </div>#}
+            </div>
 			</main>
          </section>
       </section>
