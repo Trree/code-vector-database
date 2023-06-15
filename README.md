@@ -2,6 +2,8 @@
 
 ## Introduction
 
+🌍 [_中文文档_](README_CN.md)
+
 🤖️ This project utilizes the fully open-source [milvus](https://github.com/milvus-io/milvus) to build a local code vector database, 
 enabling local, personal, and company-level code vectorization. 
 It supports the creation of function and feature-level code vector databases by parsing code files at the function level. 
@@ -27,30 +29,61 @@ It leverages ChatGPT to obtain the semantic meaning of functions and utilizes [S
 
 ### Dependencies
 
-- python 
-  - python = 3.10
-
+- python = 3.10
 - antlr4-python3-runtime
-  - Used for generating grammar parsers and lexical analyzers to extract function code content
-
-- milvus 
-  - [milvus Free trial](https://cloud.zilliz.com/login?redirect=/projects/MA==/databases)
-  - update .env milvus config
+- milvus
 - openai
-  - cp .env.template .env 
-  - update .env openai_api_key
-
 - Sentence-BERT
-  - word embeddings.
+
 
 
 ## Local Deployment
 
-- To deploy the Milvus database, you can use the free version directly or deploy it locally.
+### 1. Setting up the environment
+```shell
+# you can use conda to install the environment
+$ conda create -p /your_path/env_name python=3.10
+# Activate the environment
+$ source activate /your_path/env_name
+# Deactivate the environment
+$ source deactivate /your_path/env_name
+# Remove the environment
+$ conda env remove -p  /your_path/env_name
+```
 
-- Copy the `.env.template` file to `.env` and update the OpenAI API key and the link to Milvus.
+* Project dependencies
+
+```shell
+# Clone the repository
+$ git clone https://github.com/Trree/code-vector-database.git
+
+$ cd code-vector-database
+# Install dependencies
+$ pip install -r requirements.txt
+```
+
+### 2. Install Milvus
+
+  - [milvus Free trial](https://cloud.zilliz.com/login?redirect=/projects/MA==/databases)
+  - [Standalone Quick Start Guide](https://milvus.io/docs/v2.0.x/install_standalone-docker.md)
+
+
+### 3. Configuration
+
+1. Find the file named `.env.template` in the main `code-vector-database` folder. This file may
+    be hidden by default in some operating systems due to the dot prefix. To reveal
+    hidden files, follow the instructions for your specific operating system:
+    Windows, macOS.
+2. Create a copy of `.env.template` and call it `.env`;
+    if you're already in a command prompt/terminal window: `cp .env.template .env`.
+3. Open the `.env` file in a text editor.
+4. Find the line that says `OPENAI_API_KEY=`.
+5. After the `=`, enter your unique OpenAI API Key *without any quotes or spaces*.
+6. Please provide the Milvus keys services you would like to use.
+7. Save and close the `.env` file.
+
+### 4. Run Scripts to Experience Web UI 
 
 - Start `python app.py`.
-
 - Connect to `127.0.0.1:5000` on your browser.
 
