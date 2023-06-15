@@ -1,4 +1,5 @@
 import configparser
+import json
 import time
 
 from pymilvus import (
@@ -143,13 +144,25 @@ def search(collection, search_vectors, top_k=5):
         }
     }
 
-    results = collection.search([search_vectors], _VECTOR_FIELD_NAME, search_param, output_fields=['semantics', 'code'],
-                                limit=top_k)
+    try:
+        results = collection.search([search_vectors], _VECTOR_FIELD_NAME, search_param,
+                                    output_fields=['semantics', 'code'],
+                                    limit=top_k)
+    except Exception as e:
+        return [e]
+
     queryCode = []
     for i, result in enumerate(results):
-        print("\nSearch result for {}th vector: ".format(i))
         for j, res in enumerate(result):
-            queryCode.append(res)
+            data = {
+                'id': res.id,
+                'distance': res.distance,
+                'code': res.entity.get("code"),
+                'semantics': res.entity.get("semantics")
+            }
+            queryCode.append(data)
+    for item in queryCode:
+        print(item)
     return queryCode
 
 
