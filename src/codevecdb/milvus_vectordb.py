@@ -16,6 +16,7 @@ _VECTOR_FIELD_NAME = 'embedding'
 _METRIC_TYPE = 'L2'
 _INDEX_TYPE = 'IVF_FLAT'
 
+
 def create_connection():
     print(f"\nCreate connection...")
     cfp = Config()
