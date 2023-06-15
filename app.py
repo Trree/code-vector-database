@@ -42,4 +42,7 @@ def hello_world():
 
 
 if __name__ == '__main__':
+    from src.codevecdb.milvus_vectordb import create_connection
+
+    create_connection()
     app.run()
