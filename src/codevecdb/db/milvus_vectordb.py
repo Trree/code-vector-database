@@ -111,7 +111,7 @@ def get_entity_num(collection):
 
 def create_index(collection, filed_name):
     index = {
-        'index_type': 'AUTOINDEX',
+        'index_type': 'HNSW',
         'metric_type': 'L2',
         'params': {
             'M': 8,
@@ -124,7 +124,7 @@ def create_index(collection, filed_name):
 
 def drop_index(collection):
     collection.drop_index()
-    print("drop index success")
+    print("drop collection index success")
 
 
 def load_collection(collection):
@@ -142,7 +142,8 @@ def search(collection, search_vectors, top_k=5):
             'ef': max(64, top_k)
         }
     }
-
+    cfg = Config()
+    milvus_distance = cfg.milvus_distance
     try:
         results = collection.search([search_vectors], _VECTOR_FIELD_NAME, search_param,
                                     output_fields=['semantics', 'code'],
@@ -153,6 +154,8 @@ def search(collection, search_vectors, top_k=5):
     queryCode = []
     for i, result in enumerate(results):
         for j, res in enumerate(result):
+            if res.distance > milvus_distance:
+                continue
             data = {
                 'id': res.id,
                 'distance': res.distance,
@@ -209,7 +212,6 @@ def searchVectorCode(code_vector_list, top_k):
     set_properties(collection)
     list_collections()
 
-    # search
     result = search(collection, codeVector, top_k)
     release_collection(collection)
     return result
@@ -220,7 +222,7 @@ def searchRecentData(top_k=100):
     collection_name = cfg.milvus_collection_name
 
     if not has_collection(collection_name):
-        return ["请插入数据创建数据集合"]
+        return ["please import data"]
 
     try:
         collection = get_collection(name=collection_name)
