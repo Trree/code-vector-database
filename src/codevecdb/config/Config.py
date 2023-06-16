@@ -25,6 +25,8 @@ class Config(metaclass=Singleton):
         self.module = os.getenv("module")
         self.openai_key_pool = os.getenv("OPENAI_KEY_POOL")
         self.milvus_distance = float(os.getenv("milvus_distance"))
+        self.vector_dim = int(os.getenv("vector_dim"))
+        self.semantics_language = os.getenv("semantics_language")
 
     def set_openai_api_key(self, value: str) -> None:
         self.openai_api_key = value
@@ -62,6 +64,11 @@ class Config(metaclass=Singleton):
     def set_milvus_distance(self, value: float) -> None:
         self.milvus_distance = value
 
+    def set_vector_dim(self, value: int) -> None:
+        self.vector_dim = value
+
+    def set_semantics_language(self, value: str) -> None:
+        self.semantics_language = value
 
 def check_openai_api_key() -> None:
     """Check if the OpenAI API key is set in config.py or as an environment variable."""

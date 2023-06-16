@@ -1,5 +1,4 @@
 import configparser
-import json
 import time
 
 from pymilvus import (
@@ -12,7 +11,7 @@ from pymilvus import (
 from src.codevecdb.config.Config import Config
 
 _VECTOR_FIELD_NAME = 'embedding'
-# Index parameters
+
 _METRIC_TYPE = 'L2'
 _INDEX_TYPE = 'IVF_FLAT'
 
@@ -41,7 +40,7 @@ def create_collection(name):
     if cfg.vector_embeddings == "openai":
         dim = 1536
     else:
-        dim = 384
+        dim = cfg.vector_dim
 
     default_fields = [
         FieldSchema(name="id", dtype=DataType.INT64, is_primary=True, auto_id=False),
@@ -51,7 +50,7 @@ def create_collection(name):
     ]
 
     schema = CollectionSchema(fields=default_fields, description="collection description")
-    collection = Collection(name=name, data=None, schema=schema)
+    collection = Collection(name=name, schema=schema)
 
     print("\ncollection created:", name)
     return collection

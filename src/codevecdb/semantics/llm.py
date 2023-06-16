@@ -58,18 +58,31 @@ def getFunctionSemantics(code, api_key):
     formatted_time = current_time.strftime("%Y-%m-%d %H:%M:%S")
     print("start " + formatted_time + " " + str(thread_id) + " " + code)
     llm = OpenAI(openai_api_key=api_key, temperature=temperature, model=module)
-    template = """
-    You are a computer expert who can understand the semantics of program code functions well. 
-    You can comprehend the purpose and functionality of the code through the code itself and the comments within it.
-    Description of the function's semantics and functionality in around 50 words:
-    {codeFunction}
-    
-    Your output needs to be in JSON format and include three fields.
-    language：code language
-    scope: function or class
-    name: function name or class name
-    semantics: code semantics
-    """
+    if cfg.semantics_language == "CN":
+        template = """
+            你是一个计算机专家，能很好的理解程序代码函数的语义，你可以通过代码和代码上的注释很好的理解代码的作用和功能。
+            请用50个字以内描述下面函数的功能
+            {codeFunction}
+            
+            你的输出需要是json格式的,包含3个字段
+            language：code language
+            scope: function or class
+            name: function name or class name
+            semantics: 代码的语义
+        """
+    else:
+        template = """
+            You are a computer expert who can understand the semantics of program code functions well. 
+            You can comprehend the purpose and functionality of the code through the code itself and the comments within it.
+            Description of the function's semantics and functionality in around 50 words:
+            {codeFunction}
+            
+            Your output needs to be in JSON format and include three fields.
+            language：code language
+            scope: function or class
+            name: function name or class name
+            semantics: code semantics
+        """
 
     prompt = PromptTemplate(
         input_variables=["codeFunction"],
