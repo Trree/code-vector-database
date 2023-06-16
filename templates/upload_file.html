@@ -84,7 +84,7 @@
                         </svg>
                      </span>
                      <span class="ant-menu-title-content">
-                         <a href="/">首页</a>
+                         <a href="/">home</a>
                      </span>
                   </li>
                   <li class="ant-menu-item" role="menuitem" tabindex="-1" style="padding-left: 24px;" data-menu-id="rc-menu-uuid-59451-1-2">
@@ -94,7 +94,7 @@
                         </svg>
                      </span>
                      <span class="ant-menu-title-content">
-                         <a href="/code">插入数据</a>
+                         <a href="/code">Import Data</a>
                      </span>
                   </li>
                   <li class="ant-menu-item" role="menuitem" tabindex="-1" style="padding-left: 24px;" data-menu-id="rc-menu-uuid-59451-1-3">
@@ -104,7 +104,7 @@
                         </svg>
                      </span>
                      <span class="ant-menu-title-content">
-                         <a href="/query">查询数据</a>
+                         <a href="/query">Vector Search</a>
                      </span>
                   </li>
                    <li class="ant-menu-item  ant-menu-item-selected" role="menuitem" tabindex="-1" style="padding-left: 24px;" data-menu-id="rc-menu-uuid-59451-1-3">
@@ -114,7 +114,7 @@
                         </svg>
                      </span>
                      <span class="ant-menu-title-content">
-                         <a href="/upload">上传文件</a>
+                         <a href="/upload">Upload file</a>
                      </span>
                   </li>
                </ul>
@@ -127,10 +127,10 @@
         <main class="ant-layout-content css-12jzuas" style="margin: 24px 16px; padding: 24px; min-height: 280px; background: rgb(255, 255, 255);">
         <div class="container">
             <div id="drop-area">
-                <h1>拖放文件到此区域</h1>
+                <h1>拖放文件到此区域(Drag and drop a file here)</h1>
                 <p>或者点击此区域选择文件</p>
                 <input type="file" id="file-input" multiple>
-                <button id="upload-button">上传</button>
+                <button id="upload-button">upload</button>
             </div>
 
             <script>
@@ -202,11 +202,11 @@
                         body: formData
                     })
                     .then(response => {
-                        console.log('文件上传成功！');
+                        console.log('success');
                         // 在此处执行成功后的操作
                     })
                     .catch(error => {
-                        console.error('文件上传失败:', error);
+                        console.error('failed:', error);
                         // 在此处处理错误
                     });
                 }

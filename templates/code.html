@@ -34,6 +34,15 @@
         .ant-menu-item-selected a {
             color: white;
         }
+        /* Option 1: Using word-wrap */
+      p {
+        word-wrap: break-word;
+      }
+
+      /* Option 2: Using overflow-wrap */
+      p {
+        overflow-wrap: break-word;
+      }
     </style>
 </head>
 
@@ -53,7 +62,7 @@
                         </svg>
                      </span>
                      <span class="ant-menu-title-content">
-                         <a href="/">首页</a>
+                         <a href="/">home</a>
                      </span>
                   </li>
                   <li class="ant-menu-item ant-menu-item-selected" role="menuitem" tabindex="-1" style="padding-left: 24px;" data-menu-id="rc-menu-uuid-59451-1-2">
@@ -63,7 +72,7 @@
                         </svg>
                      </span>
                      <span class="ant-menu-title-content">
-                         <a href="/code">插入数据</a>
+                         <a href="/code">Import Data</a>
                      </span>
                   </li>
                   <li class="ant-menu-item" role="menuitem" tabindex="-1" style="padding-left: 24px;" data-menu-id="rc-menu-uuid-59451-1-3">
@@ -73,7 +82,7 @@
                         </svg>
                      </span>
                      <span class="ant-menu-title-content">
-                         <a href="/query">查询数据</a>
+                         <a href="/query">Vector Search</a>
                      </span>
                   </li>
                    <li class="ant-menu-item" role="menuitem" tabindex="-1" style="padding-left: 24px;" data-menu-id="rc-menu-uuid-59451-1-3">
@@ -83,7 +92,7 @@
                         </svg>
                      </span>
                      <span class="ant-menu-title-content">
-                         <a href="/upload">上传文件</a>
+                         <a href="/upload">Upload file</a>
                      </span>
                   </li>
                </ul>
@@ -99,27 +108,27 @@
         <form method="POST" action="/code">
             <section class="code-box">
                 <section class="code-box-demo">
-                    <h1 class="ant-typography">代码向量数据库</h1>
-                    <h4 class="ant-typography">上传代码函数:</h4>
+                    <h1 class="ant-typography">local code vector database</h1>
+                    <h4 class="ant-typography">upload code function(上传代码函数):</h4>
                     <textarea placeholder="请输入代码" class="ant-input"
                         style="overflow-y: hidden; resize: none; height: 182px;" id="code" name="code"></textarea>
                     <input type="submit" value="Submit" class="ant-btn ant-btn-primary">
                 </section>
             </section>
         </form>
-        <section class="code-box">
-        <pre>
-            <div class="ant-result ant-result-success">
+        <section class="ant-layout css-12jzuas">
+        <main class="ant-layout-content css-12jzuas" style="margin: 24px 16px; padding: 24px; min-height: 280px; background: rgb(255, 255, 255);">
+			<div class="container">
+            <h1>Semantics</h1>
+                <pre>
                 {% if results %}
-                <div class="ant-result-title">代码语义</div>
-                {% for item in results %}
-                    <div class="ant-result-subtitle"><code>{{ item }}</code></div>
-                {% endfor %}
+                    <div class="code">
+                    {% for item in results %}
+                        <p>{{ item }}</p>
+                    {% endfor %}
+                    </div>
                 {% endif %}
-            </div>
-        </pre>
-        </section>
-
+            </pre>
         </div>
 			</main>
          </section>

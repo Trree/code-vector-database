@@ -1,9 +1,9 @@
 
 from concurrent.futures import ThreadPoolExecutor
 
-from src.codevecdb import llm
-from src.codevecdb.langchianEmbedding import get_semantics_vector
-from src.codevecdb.milvus_vectordb import batchInsert
+from src.codevecdb.semantics import llm
+from src.codevecdb.embeddings.langchainEmbedding import get_semantics_vector
+from src.codevecdb.db.milvus_vectordb import batchInsert
 
 
 def parseCodeAndInsert(code):

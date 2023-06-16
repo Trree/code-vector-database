@@ -1,5 +1,6 @@
 
 import os
+
 from colorama import Fore
 
 from src.codevecdb.singleton import Singleton
@@ -20,6 +21,8 @@ class Config(metaclass=Singleton):
         self.vector_embeddings = os.getenv("vector_embeddings")
         self.milvus_collection_name = os.getenv("milvus_collection_name")
         self.milvus_collection_dim = os.getenv("milvus_collection_dim")
+        self.temperature = float(os.getenv("temperature"))
+        self.module = os.getenv("module")
 
     def set_openai_api_key(self, value: str) -> None:
         self.openai_api_key = value
@@ -44,6 +47,13 @@ class Config(metaclass=Singleton):
 
     def set_milvus_collection_dim(self, value: str) -> None:
         self.milvus_collection_dim = value
+
+    def set_temperature(self, value: float) -> None:
+        self.temperature = value
+
+    def set_module(self, value: str) -> None:
+        self.module = value
+
 
 def check_openai_api_key() -> None:
     """Check if the OpenAI API key is set in config.py or as an environment variable."""

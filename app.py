@@ -3,7 +3,7 @@ from flask import Flask, render_template, request
 from src.codevecdb.parse_code import parseCodeAndInsert
 from src.codevecdb.search_code import searchCode, getAllCode
 from src.codevecdb.split.split_dispatch import split_file_to_function
-from src.codevecdb.milvus_vectordb import create_connection
+from src.codevecdb.db.milvus_vectordb import create_connection
     
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True

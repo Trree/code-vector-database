@@ -36,7 +36,6 @@ def create_connection():
     print(connections.list_connections())
 
 
-# Create a collection named 'demo'
 def create_collection(name):
     cfg = Config()
     if cfg.vector_embeddings == "openai":
@@ -93,7 +92,6 @@ def insert(collection, i, semantics, code, vector):
 
 
 def batch_insert(collection, i, code_result):
-    # for i, (code, result) in enumerate(code_result.items()):
     data = [
         [i + j for j in range(len(code_result))],
         [code_result[key]["semantics"] for key in code_result.keys()],

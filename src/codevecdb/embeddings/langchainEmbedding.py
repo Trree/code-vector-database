@@ -1,8 +1,8 @@
 from concurrent.futures import ThreadPoolExecutor
 
-from src.codevecdb.bert_vector import semantics_vector
+from src.codevecdb.embeddings.bert_vector import semantics_vector
 from src.codevecdb.config.Config import Config
-from src.codevecdb.openai_embeddings import getTextEmbedding
+from src.codevecdb.embeddings.openai_embeddings import getTextEmbedding
 
 
 def get_semantics_vector(semantics_list):
