@@ -23,6 +23,7 @@ class Config(metaclass=Singleton):
         self.milvus_collection_dim = os.getenv("milvus_collection_dim")
         self.temperature = float(os.getenv("temperature"))
         self.module = os.getenv("module")
+        self.openai_key_pool = os.getenv("OPENAI_KEY_POOL")
 
     def set_openai_api_key(self, value: str) -> None:
         self.openai_api_key = value
@@ -53,6 +54,9 @@ class Config(metaclass=Singleton):
 
     def set_module(self, value: str) -> None:
         self.module = value
+
+    def set_openai_key_pool(self, value: str) -> None:
+        self.openai_key_pool = value
 
 
 def check_openai_api_key() -> None:

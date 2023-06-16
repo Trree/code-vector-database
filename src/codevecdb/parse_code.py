@@ -1,9 +1,6 @@
-
-from concurrent.futures import ThreadPoolExecutor
-
-from src.codevecdb.semantics import llm
 from src.codevecdb.embeddings.langchainEmbedding import get_semantics_vector
 from src.codevecdb.db.milvus_vectordb import batchInsert
+from src.codevecdb.semantics.llm import batchGetSemantics
 
 
 def parseCodeAndInsert(code):
@@ -15,21 +12,13 @@ def parseCodeAndInsert(code):
 def batchParseCodeAndInsert(code_list):
     if not code_list:
         return ["code_list empty"]
-    result_dict, semantics = getSemanticsAndVector(code_list, False)
+    result_dict, semantics = getSemanticsAndVector(code_list)
     batchInsert(result_dict)
     return semantics
 
 
-def getSemanticsAndVector(code_list, asyncRequest):
-    if asyncRequest:
-        with ThreadPoolExecutor() as executor:
-            futures = [executor.submit(llm.getFunctionSemantics, item) for item in code_list]
-            semantics = [future.result() for future in futures]
-    else:
-        semantics = []
-        for item in code_list:
-            semantics.append(llm.getFunctionSemantics(item))
-
+def getSemanticsAndVector(code_list):
+    semantics = batchGetSemantics(code_list)
     codeVector = get_semantics_vector(semantics)
     result_dict = {}
     for code, semantics_item, codeVector_item in zip(code_list, semantics, codeVector):
