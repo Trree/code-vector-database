@@ -10,13 +10,14 @@ It supports the creation of function and feature-level code vector databases by 
 It leverages ChatGPT to obtain the semantic meaning of functions and utilizes [Sentence-BERT](https://mccormickml.com/2019/05/14/BERT-word-embeddings-tutorial/) for word embeddings.
 
 
-## Use Cases
+## Scenarios
 - Building personal or company-level code vector libraries
 - Uploading code files to establish function and feature-level code vector databases
 - Searching for your own code using prompts
 - Generating frameworks and code based on requirement documents
 
 ### List
+- [x] support openai api key pool，Support for multi threading Requests to OpenAI API.
 - [x] Support uploading Python, Java, and C++ code files
 - [x] Parse code at the function level
 - [x] Obtain semantic meaning of parsed functions using ChatGPT
