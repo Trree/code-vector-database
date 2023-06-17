@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Interface</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Chat Interface</h1>
+    <div id="chat-container">
+        <div id="chat-log"></div>
+        <div id="user-input">
+            <input type="text" id="user-message" placeholder="Type your message..." />
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('#send-button').click(function () {
+                sendMessage();
+            });
+
+            $('#user-message').keypress(function (e) {
+                if (e.which === 13) {
+                    sendMessage();
+                }
+            });
+
+            function sendMessage() {
+                var message = $('#user-message').val();
+                if (message.trim() !== '') {
+                    displayUserMessage(message);
+                    sendRequest(message);
+                    $('#user-message').val('');
+                }
+            }
+
+            function displayUserMessage(message) {
+                var chatLog = $('#chat-log');
+                chatLog.append('<div class="user-message">' + message + '</div>');
+                chatLog.scrollTop(chatLog.prop('scrollHeight'));
+            }
+
+            function displayBotMessage(message) {
+                var chatLog = $('#chat-log');
+                chatLog.append('<div class="bot-message">' + message + '</div>');
+                chatLog.scrollTop(chatLog.prop('scrollHeight'));
+            }
+
+            function sendRequest(message) {
+                $.ajax({
+                    url: '/chat',
+                    type: 'POST',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ 'utterance': message }),
+                    success: function (response) {
+                        displayBotMessage(response.response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+        });
+    </script>
+    <style>
+        #chat-container {
+            width: 400px;
+            margin: 0 auto;
+        }
+
+        #chat-log {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        #user-input {
+            display: flex;
+        }
+
+        #user-message {
+            flex-grow: 1;
+            padding: 5px;
+        }
+
+        #send-button {
+            padding: 5px 10px;
+        }
+
+        .user-message {
+            color: blue;
+        }
+
+        .bot-message {
+            color: green;
+        }
+    </style>
+</body>
+</html>

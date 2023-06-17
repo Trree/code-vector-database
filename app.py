@@ -10,6 +10,11 @@ app.config['TEMPLATES_AUTO_RELOAD'] = True
 create_connection()
 
 
+@app.route('/chat')
+def chat_page():
+    return render_template('chat.html')
+
+
 @app.route('/code', methods=['GET', 'POST'])
 def post_code():
     if request.method == 'POST':
