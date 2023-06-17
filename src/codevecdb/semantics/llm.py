@@ -22,7 +22,9 @@ def split_list(lst, chunk_size):
 
 def batchGetSemantics(code_list):
     cfg = Config()
-    key_list = cfg.openai_key_pool.split(",")
+    key_list = []
+    if cfg.openai_key_pool:
+        key_list = cfg.openai_key_pool.split(",")
     key_list.append(cfg.openai_api_key)
     unique_key = list(set(key_list))
     print("key size:" + str(len(unique_key)))
